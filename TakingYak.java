@@ -12,8 +12,8 @@ public class TakingYak {
 
         String robotStartPosition = scanner.nextLine(); // read line from console
 
-        int robotColumnPosition = Integer.parseInt(robotStartPosition.split(" ")[0]); // ROBOT initial column position
-        int robotRowPosition = Integer.parseInt(robotStartPosition.split(" ")[1]); // ROBOT initial row position
+        int x = Integer.parseInt(robotStartPosition.split(" ")[0]); // ROBOT initial x coordinate position
+        int y = Integer.parseInt(robotStartPosition.split(" ")[1]); // ROBOT initial y coordinate position
         char robotDirection = robotStartPosition.split(" ")[2].charAt(0); // ROBOT initial direction
 
         String robotInstruction = scanner.nextLine(); // read instruction for ROBOT from console
@@ -22,25 +22,25 @@ public class TakingYak {
         ROBOT traversing from start position to the destination position
          */
         for (int i = 0; i < robotInstruction.length(); i++) {
-            String[] robotNewPosition = robotNewPosition(robotColumnPosition, robotRowPosition, robotDirection, robotInstruction.charAt(i));
-            robotColumnPosition = Integer.parseInt(robotNewPosition[0]);
-            robotRowPosition = Integer.parseInt(robotNewPosition[1]);
+            String[] robotNewPosition = robotNewPosition(x, y, robotDirection, robotInstruction.charAt(i));
+            x = Integer.parseInt(robotNewPosition[0]);
+            y = Integer.parseInt(robotNewPosition[1]);
             robotDirection = robotNewPosition[2].charAt(0);
 
-            if (!((robotColumnPosition >= 0 && robotColumnPosition <= maxColumn)
-                    && (robotRowPosition >= 0 && robotRowPosition <= maxRow))) {
+            if (!((x >= 0 && x <= maxColumn)
+                    && (y >= 0 && y <= maxRow))) {
                 System.out.println("You have given wrong direction to the ROBOT. Or robot went out to the grid.");
                 return;
             }
         }
 
-        System.out.println(robotColumnPosition + " " + robotRowPosition + " " + robotDirection);
+        System.out.println(x + " " + y + " " + robotDirection);
     }
 
     /*
     ROBOT new position after one instruction
      */
-    private static String[] robotNewPosition(int column, int row, char oldDirection, char newInstruction) {
+    private static String[] robotNewPosition(int x, int y, char oldDirection, char newInstruction) {
         /*
         N => North,
         S => South,
@@ -57,13 +57,13 @@ public class TakingYak {
 
         if (newInstruction == instruction[2]) {
             if (oldDirection == direction[0]) {
-                row++;
+                y++;
             } else if (oldDirection == direction[1]) {
-                row--;
+                y--;
             } else if (oldDirection == direction[2]) {
-                column++;
+                x++;
             } else if (oldDirection == direction[3]) {
-                column--;
+                x--;
             }
 
         } else if (newInstruction == instruction[0]) {
@@ -89,8 +89,8 @@ public class TakingYak {
         }
 
         String[] robotNewPosition = new String[3];
-        robotNewPosition[0] = String.valueOf(column);
-        robotNewPosition[1] = String.valueOf(row);
+        robotNewPosition[0] = String.valueOf(x);
+        robotNewPosition[1] = String.valueOf(y);
         robotNewPosition[2] = String.valueOf(oldDirection);
 
         return robotNewPosition;
